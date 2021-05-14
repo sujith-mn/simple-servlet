@@ -1,0 +1,4 @@
+
+Your application has been deployed successfully.
+
+URL: https://{{ template "simple-servlet.fullname" . }}-{{ .Release.Namespace }}.cloud.okteto.net

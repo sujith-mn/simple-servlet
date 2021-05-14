@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "simple-servlet.fullname" . }}
+  annotations:
+    dev.okteto.com/auto-ingress: "true"    
+  labels:
+    app: "{{ template "simple-servlet.fullname" . }}"
+    chart: "{{ template "simple-servlet.chart" . }}"
+    release: {{ .Release.Name | quote }}
+    heritage: {{ .Release.Service | quote }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: {{ include "simple-servlet.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
