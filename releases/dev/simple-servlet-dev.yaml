@@ -13,7 +13,7 @@ spec:
     path: chart
     ref: master
   values:
-    replicaCount: 1
+    replicaCount: 2
     image:
       repository: okteto/simple-servlet
       tag: java
