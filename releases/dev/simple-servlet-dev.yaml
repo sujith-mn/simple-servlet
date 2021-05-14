@@ -11,7 +11,7 @@ spec:
   chart:
     git: git@github.com:sujith-mn/simple-servlet
     path: chart
-    ref: master
+    ref: main
   values:
     replicaCount: 2
     image:
