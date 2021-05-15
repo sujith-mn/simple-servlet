@@ -1,0 +1,20 @@
+# a simple ingress for our service
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: servlet
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+    - http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name: servlet-v1
+                port:
+                  number: 8080
+      # this will work if you have dnsmasq(tkit env guide)
+      host: simple-servlet.sujith-mn.cloud.okteto.net

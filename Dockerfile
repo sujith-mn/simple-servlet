@@ -4,5 +4,5 @@ COPY . .
 RUN mvn clean install
 
 FROM jetty
-COPY --from=build target/simple-servlet-0.1.war /var/lib/jetty/webapps/root.war
+COPY --from=build /app/target/simple-servlet-0.1.war /var/lib/jetty/webapps/root.war
 EXPOSE 8080

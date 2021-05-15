@@ -39,8 +39,7 @@ public final class DbUtil {
 	}
 
 	public void insertData(String method, String data) throws SQLException {
-		if (data.equals(""))
-			return;
+		if (data==null ||data.equals("")) return;
 		String sql = "INSERT INTO request (method,data) VALUES (?,?)";
 		PreparedStatement stmt = con.prepareStatement(sql);
 		stmt.setString(1, method);

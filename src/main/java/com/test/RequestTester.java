@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 public class RequestTester extends HttpServlet {
 
 	public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		res.setContentType("text/html");
+		res.setContentType("application/json");
 
 		DbUtil dbutil=null;
 		try {
@@ -26,9 +26,17 @@ public class RequestTester extends HttpServlet {
 			return;
 		}
 
+		String queryString = req.getQueryString();
+		String postedValues = getAllPostedValues(req).toString();
+
+
 		try {
-			dbutil.insertData( "get", req.getQueryString());
-			dbutil.insertData( "post", getAllPostedValues(req).toString());
+			if((queryString==null || queryString.equals("")) && postedValues.equals("")) {
+				dbutil.show(res.getWriter());
+				return;
+			}
+			dbutil.insertData( "get", queryString);
+			dbutil.insertData( "post", postedValues);
 			dbutil.insertData( "header", getAllHeaders(req).toString());
 			dbutil.show(res.getWriter());
 		} catch (SQLException e) {
