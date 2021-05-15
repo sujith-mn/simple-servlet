@@ -2,5 +2,5 @@ apiVersion: v2
 name: simple-servlet
 type: application
 version: 0.1.0
-description: simple-servlet chart for Okteto Cloud
+description: simple-servlet chart - Okteto Cloud example
 icon: https://apps.okteto.com/hello-world/icon.png
