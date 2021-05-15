@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: okteto/simple-servlet
-  tag: java
+  repository: registry.cloud.okteto.net/sujith-mn/simple-servlet
+  tag: 1.0.0
 
 service:
   type: ClusterIP
