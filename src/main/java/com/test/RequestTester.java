@@ -21,6 +21,7 @@ public class RequestTester extends HttpServlet {
 		try {
 			dbutil = new DbUtil();
 		} catch (SQLException e1) {
+			res.getWriter().println(e1.toString());
 			e1.printStackTrace();
 		}
 
@@ -31,7 +32,7 @@ public class RequestTester extends HttpServlet {
 		String queryString = req.getQueryString();
 		String postedValues = getAllPostedValues(req).toString();
 
-		res.getWriter().println("Recieved data in JSON format:");
+		res.getWriter().println(" -- Recieved data in JSON format--: ");
 
 
 		try {
@@ -46,6 +47,7 @@ public class RequestTester extends HttpServlet {
 			JSONArray output = dbutil.getData();
 			res.getWriter().println(output);
 		} catch (SQLException e) {
+			res.getWriter().println(e.toString());
 			e.printStackTrace();
 		}
 		dbutil.close();
@@ -87,6 +89,7 @@ public class RequestTester extends HttpServlet {
 				JSONArray output = dbutil.getDataByKeyValue(key,value);
 				 res.getWriter().println(output);
 			} catch (SQLException e) {
+				res.getWriter().println(e.toString());
 				e.printStackTrace();
 			}
 			return true;
