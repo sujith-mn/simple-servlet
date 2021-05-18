@@ -48,7 +48,7 @@ public final class DbUtil {
 		stmt.close();
 	}
 
-	public void show(String key,String value, PrintWriter out) throws SQLException {
+	public JSONArray getDataByKeyValue(String key,String value) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("select * from request where "+key+"=?");
 		ps.setString(1, value);
 		ResultSet rs = ps.executeQuery();
@@ -67,10 +67,10 @@ public final class DbUtil {
 				obj.put(columnName, rs.getString(columnName));
 			}
 		}
-		out.println(ja);
+		return ja;
 	}
 
-	public void show(PrintWriter out) throws SQLException {
+	public JSONArray getData() throws SQLException {
 		PreparedStatement ps = con.prepareStatement("select * from request");
 		ResultSet rs = ps.executeQuery();
 		ResultSetMetaData rsmd = rs.getMetaData();
@@ -80,7 +80,6 @@ public final class DbUtil {
 			columnNames.add(rsmd.getColumnName(i).toLowerCase());
 		}
 		JSONArray ja = new JSONArray();
-
 		while (rs.next()) {
 			JSONObject obj = new JSONObject();
 			ja.add(obj);
@@ -88,6 +87,6 @@ public final class DbUtil {
 				obj.put(columnName, rs.getString(columnName));
 			}
 		}
-		out.println(ja);
+		return ja;
 	}
 }

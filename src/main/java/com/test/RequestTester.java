@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
+
 public class RequestTester extends HttpServlet {
 
 	public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -22,23 +24,27 @@ public class RequestTester extends HttpServlet {
 			e1.printStackTrace();
 		}
 
-		if(searchById(req, res, dbutil)) {
+		if(searchByKeyValue(req, res, dbutil)) {
 			return;
 		}
 
 		String queryString = req.getQueryString();
 		String postedValues = getAllPostedValues(req).toString();
 
+		res.getWriter().println("Recieved data in JSON format:");
+
 
 		try {
 			if((queryString==null || queryString.equals("")) && postedValues.equals("")) {
-				dbutil.show(res.getWriter());
+				JSONArray output = dbutil.getData();
+				 res.getWriter().println(output);
 				return;
 			}
 			dbutil.insertData( "get", queryString);
 			dbutil.insertData( "post", postedValues);
 			dbutil.insertData( "header", getAllHeaders(req).toString());
-			dbutil.show(res.getWriter());
+			JSONArray output = dbutil.getData();
+			res.getWriter().println(output);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -73,12 +79,13 @@ public class RequestTester extends HttpServlet {
 		return postedData;
 	}
 
-	private boolean searchById(HttpServletRequest req, HttpServletResponse res, DbUtil dbutil) throws IOException {
+	private boolean searchByKeyValue(HttpServletRequest req, HttpServletResponse res, DbUtil dbutil) throws IOException {
 		String key = req.getParameter("key");
 		if (key != null && !key.equals("")) {
 			String value = req.getParameter("value");
 			try {
-				dbutil.show(key,value, res.getWriter());
+				JSONArray output = dbutil.getDataByKeyValue(key,value);
+				 res.getWriter().println(output);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
