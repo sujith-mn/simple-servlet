@@ -2,9 +2,7 @@ name: Sonar CI
 on:
   push:
     branches:
-    - master
-    - '[4-9]+.[0-9]+.x'
-    - sonar
+    - main
 
 jobs:
   build:
